@@ -7,6 +7,9 @@ bool multTrigger = false;
 bool addTrigger = false;
 bool subTrigger = false;
 
+// Define the static QRegularExpression
+QRegularExpression terry_calculator::re("[-]?[0-9.*");
+
 terry_calculator::terry_calculator(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::terry_calculator)
@@ -22,6 +25,20 @@ terry_calculator::terry_calculator(QWidget *parent)
                 SLOT(NumPressed()));
     }
 
+    connect(ui->Add, SIGNAL(released()), this,
+            SLOT(MathButtonPressed()));
+    connect(ui->Subtract, SIGNAL(released()), this,
+            SLOT(MathButtonPressed()));
+    connect(ui->Multiply, SIGNAL(released()), this,
+            SLOT(MathButtonPressed()));
+    connect(ui->Divide, SIGNAL(released()), this,
+            SLOT(MathButtonPressed()));
+
+    connect(ui->Equals, SIGNAL(released()), this,
+            SLOT(EqualsButtonPressed()));
+
+    connect(ui->ChangeSign, SIGNAL(released()), this,
+            SLOT(ChangeNumberSign()));
 }
 
 terry_calculator::~terry_calculator()
@@ -63,7 +80,7 @@ void terry_calculator::MathButtonPressed(){
     ui->Display->setText("");
 }
 
-void terry_calculator::EqualButton(){
+void terry_calculator::EqualButtonPressed(){
     double solution = 0.0;
     QString displayVal = ui->Display->text();
     double dblDisplayVal = displayVal.toDouble();
@@ -81,13 +98,12 @@ void terry_calculator::EqualButton(){
     ui->Display->setText(QString::number(solution));
 }
 
-//void terry_calculator::ChangeNumberSign(){
-//    QString displayVal = ui->Display->text();
-//    QRegularExpression reg("[-]?[0-9.]*");
-//    if(reg.exactMatch(displayVal)){
-//        double dblDisplayVal = displayVal.toDouble();
-//        double dblDisplayValSign = -1 * dblDisplayVal;
- //       ui->Display->setText(QString::number(dblDisplayValSign));
-// }
+void terry_calculator::ChangeNumberSign(){
+    QString displayVal = ui->Display->text();
+   if(re.match(displayVal).hasMatch()){
+       double dblDisplayVal = displayVal.toDouble();
+       double dblDisplayValSign = -1 * dblDisplayVal;
+        ui->Display->setText(QString::number(dblDisplayValSign));
+ }
 
-//)
+}

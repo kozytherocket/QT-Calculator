@@ -2,6 +2,7 @@
 #define TERRY_CALCULATOR_H
 
 #include <QMainWindow>
+#include <QRegularExpression>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,11 +20,12 @@ public:
 
 private:
     Ui::terry_calculator *ui;
+    static QRegularExpression re;
 
 private slots:
     void NumPressed();
     void MathButtonPressed();
-    void EqualButton();
-//   void ChangeNumberSign();
+    void EqualButtonPressed();
+    void ChangeNumberSign();
 };
 #endif // TERRY_CALCULATOR_H
