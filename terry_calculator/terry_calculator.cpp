@@ -6,9 +6,12 @@ bool divTrigger = false;
 bool multTrigger = false;
 bool addTrigger = false;
 bool subTrigger = false;
+bool memAddTrigger = false;
+bool memGetTrigger = false;
+bool memClearTrigger = false;
 
 // Define the static QRegularExpression
-QRegularExpression terry_calculator::re("[-]?[0-9.*");
+QRegularExpression terry_calculator::re("[-]?[0-9.*]");
 
 terry_calculator::terry_calculator(QWidget *parent)
     : QMainWindow(parent)
@@ -33,13 +36,24 @@ terry_calculator::terry_calculator(QWidget *parent)
             SLOT(MathButtonPressed()));
     connect(ui->Divide, SIGNAL(released()), this,
             SLOT(MathButtonPressed()));
-
+// Equals Button Signal
     connect(ui->Equals, SIGNAL(released()), this,
             SLOT(EqualsButtonPressed()));
-
-    connect(ui->ChangeSign, SIGNAL(released()), this,
+// ChangeNumSign Signal
+    connect(ui->ChangeNumberSign, SIGNAL(released()), this,
             SLOT(ChangeNumberSign()));
+// Clear Button Signal
+    connect(ui->Clear, SIGNAL(released()), this,
+            SLOT(Clear()));
+// Memory Button Signal
+    connect(ui->MemAdd, SIGNAL(released()), this,
+            SLOT(MemoryButtonPressed()));
+    connect(ui->MemGet, SIGNAL(released()), this,
+            SLOT(MemoryButtonPressed()));
+    connect(ui->MemClear, SIGNAL(released()), this,
+            SLOT(MemoryButtonPressed()));
 }
+
 
 terry_calculator::~terry_calculator()
 {
@@ -80,7 +94,7 @@ void terry_calculator::MathButtonPressed(){
     ui->Display->setText("");
 }
 
-void terry_calculator::EqualButtonPressed(){
+void terry_calculator::EqualsButtonPressed(){
     double solution = 0.0;
     QString displayVal = ui->Display->text();
     double dblDisplayVal = displayVal.toDouble();
@@ -107,3 +121,24 @@ void terry_calculator::ChangeNumberSign(){
  }
 
 }
+
+void terry_calculator::MemoryButtonPressed(){
+    memAddTrigger = false;
+    memGetTrigger = false;
+    memClearTrigger = false;
+    QString displayVal = ui->Display->text();
+    calcVal = displayVal.toDouble();
+    QPushButton *button = (QPushButton *)sender();
+    QString butVal = button->text();
+    if(QString::compare(butVal, "M+", Qt::CaseInsensitive) == 0){
+        memAddTrigger = true;
+        if(memAddTrigger){
+            ui->Display->setText("");
+        }
+    }
+}
+
+void terry_calculator::Clear(){
+    ui->Display->setText("");
+}
+

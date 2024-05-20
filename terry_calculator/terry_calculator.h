@@ -25,7 +25,9 @@ private:
 private slots:
     void NumPressed();
     void MathButtonPressed();
-    void EqualButtonPressed();
+    void EqualsButtonPressed();
     void ChangeNumberSign();
+    void Clear();
+    void MemoryButtonPressed();
 };
 #endif // TERRY_CALCULATOR_H
