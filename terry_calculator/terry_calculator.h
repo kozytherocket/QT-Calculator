@@ -21,6 +21,7 @@ public:
 private:
     Ui::terry_calculator *ui;
     static QRegularExpression re;
+    double memoryValue = 0.0;
 
 private slots:
     void NumPressed();
