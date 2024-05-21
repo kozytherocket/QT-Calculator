@@ -123,23 +123,25 @@ void terry_calculator::ChangeNumberSign(){
 }
 
 void terry_calculator::MemoryButtonPressed(){
-    QString displayVal = ui->Display->text();
-    double dblDisplayVal = displayVal.toDouble();
     QPushButton *button = (QPushButton *)sender();
     QString butVal = button->text();
+    QString displayVal = ui->Display->text();
+    double dblDisplayVal = displayVal.toDouble();
+    
+    
     if (memAddTrigger || memGetTrigger || memClearTrigger){
         if(memAddTrigger){
             if(QString::compare(butVal, "M+", Qt::CaseInsensitive) == 0){
                 memAddTrigger = true;
-                dblDisplayVal = displayVal.toDouble();
+                memoryValue += dbldisplayVal;
             } else if(memGetTrigger){
             if(QString::compare(butVal, "M", Qt::CaseInsensitive) == 0){
                 memGetTrigger = true;
-                ui->Display->setText(QString::number(dblDisplayVal));
+                ui->Display->setText(QString::number(memory));
             } else if(memClearTrigger){
             if(QString::compare(butVal, "M-", Qt::CaseInsensitive) == 0){
                 memClearTrigger = true;
-                    ui->Display->setText("");
+                    memoryValue = 0.0;
                     }
 
                 }
