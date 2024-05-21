@@ -123,19 +123,30 @@ void terry_calculator::ChangeNumberSign(){
 }
 
 void terry_calculator::MemoryButtonPressed(){
-    memAddTrigger = false;
-    memGetTrigger = false;
-    memClearTrigger = false;
     QString displayVal = ui->Display->text();
-    calcVal = displayVal.toDouble();
+    double dblDisplayVal = displayVal.toDouble();
     QPushButton *button = (QPushButton *)sender();
     QString butVal = button->text();
-    if(QString::compare(butVal, "M+", Qt::CaseInsensitive) == 0){
-        memAddTrigger = true;
+    if (memAddTrigger || memGetTrigger || memClearTrigger){
         if(memAddTrigger){
-            ui->Display->setText("");
+            if(QString::compare(butVal, "M+", Qt::CaseInsensitive) == 0){
+                memAddTrigger = true;
+                dblDisplayVal = displayVal.toDouble();
+            } else if(memGetTrigger){
+            if(QString::compare(butVal, "M", Qt::CaseInsensitive) == 0){
+                memGetTrigger = true;
+                ui->Display->setText(QString::number(dblDisplayVal));
+            } else if(memClearTrigger){
+            if(QString::compare(butVal, "M-", Qt::CaseInsensitive) == 0){
+                memClearTrigger = true;
+                    ui->Display->setText("");
+                    }
+
+                }
+            }
         }
     }
+    ui->Display->setText(QString::number(dblDisplayVal));
 }
 
 void terry_calculator::Clear(){
