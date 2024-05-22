@@ -1,6 +1,7 @@
 #include "terry_calculator.h"
 #include "ui_terry_calculator.h"
 
+double memoryValue = 0.0;
 double calcVal = 0.0;
 bool divTrigger = false;
 bool multTrigger = false;
@@ -126,30 +127,20 @@ void terry_calculator::MemoryButtonPressed(){
     QPushButton *button = (QPushButton *)sender();
     QString butVal = button->text();
     QString displayVal = ui->Display->text();
-    double dblDisplayVal = displayVal.toDouble();
-    
-    
-    if (memAddTrigger || memGetTrigger || memClearTrigger){
-        if(memAddTrigger){
+    double dblDisplayVal = displayVal.toDouble();{
             if(QString::compare(butVal, "M+", Qt::CaseInsensitive) == 0){
-                memAddTrigger = true;
-                memoryValue += dbldisplayVal;
-            } else if(memGetTrigger){
-            if(QString::compare(butVal, "M", Qt::CaseInsensitive) == 0){
-                memGetTrigger = true;
-                ui->Display->setText(QString::number(memory));
-            } else if(memClearTrigger){
-            if(QString::compare(butVal, "M-", Qt::CaseInsensitive) == 0){
-                memClearTrigger = true;
-                    memoryValue = 0.0;
-                    }
+                memoryValue += dblDisplayVal;
+            } else if(QString::compare(butVal, "M", Qt::CaseInsensitive) == 0){
 
-                }
-            }
+                ui->Display->setText(QString::number(memoryValue));
+            } else if(QString::compare(butVal, "M-", Qt::CaseInsensitive) == 0){
+
+                    memoryValue = 0.0;
         }
+
     }
-    ui->Display->setText(QString::number(dblDisplayVal));
 }
+
 
 void terry_calculator::Clear(){
     ui->Display->setText("");
